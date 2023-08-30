@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'RepairShopApp.apps.RepairshopappConfig'
+    'rest_framework',
+    'RepairShopApp.apps.RepairshopappConfig',
 ]
 
 MIDDLEWARE = [

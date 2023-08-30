@@ -6,6 +6,9 @@ class Customer(models.Model):
     phone_number = models.CharField(max_length=15)
     address = models.CharField(max_length=150)
 
+    def __str__(self):
+        return  self.name
+
 
 class Device(models.Model):
     name = models.CharField(max_length=100)
@@ -14,10 +17,12 @@ class Device(models.Model):
     problem = models.CharField(max_length=100)
     point = models.IntegerField(default=0)
 
+    def __str__(self):
+        return "{} from {}".format(self.name,self.customer)
 
 class Process(models.Model):
     name = models.CharField(max_length=100)
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
     description = models.TextField()
     entry_date = models.DateField(auto_now_add=True)
-    exit_date = models.DateField()
+    exit_date = models.DateField(blank=True,null=True)
