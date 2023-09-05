@@ -4,15 +4,13 @@ from .models import *
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'address','phone_number' )
-    search_fields = ['name']
-    list_filter = ('name',)
+    list_display = ('id', 'user', 'address', 'phone_number' )
     empty_value_display = '-empty-'
 
 
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'customer', 'problem')
+    list_display = ('name', 'customer', 'tracking_code', 'status')
     search_fields = ['customer']
     empty_value_display = '-empty-'
 
