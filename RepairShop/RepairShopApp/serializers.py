@@ -23,9 +23,19 @@ class DeviceSerializer(serializers.ModelSerializer):
 
 
 class ProcessSerializer(serializers.ModelSerializer):
+    lookup_field = 'tracking_code'
+    def get_exit_date(self, obj):
+        if obj.exit_date == None:
+            return 'در حال انجام'
+        else:
+            return obj.exit_date
+    # device = serializers.SerializerMethodField("get_device")
+    device = DeviceSerializer()
+    exit_date = serializers.SerializerMethodField("get_exit_date")
     class Meta:
         model = Process
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['id']
 
 
 # input user data into the user token

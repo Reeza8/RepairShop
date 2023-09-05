@@ -10,14 +10,14 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'customer', 'tracking_code', 'status')
+    list_display = ('id', 'name', 'customer', 'tracking_code', 'status')
     search_fields = ['customer']
     empty_value_display = '-empty-'
 
 
 @admin.register(Process)
 class ProcessAdmin(admin.ModelAdmin):
-    list_display = ('name', 'device', 'entry_date')
+    list_display = ('id', 'name', 'device', 'entry_date')
     search_fields = ['entry_date']
     empty_value_display = '-empty-'
 
