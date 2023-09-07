@@ -45,11 +45,7 @@ INSTALLED_APPS = [
 
 ]
 
-
-
-
 SITE_ID = 1
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'RepairShopApp.middleware.TokenMiddleWare'
+    'RepairShopApp.middleware.TokenMiddleWare'
 ]
 
 ROOT_URLCONF = 'RepairShop.urls'
@@ -148,8 +144,8 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-  # It will work instead of the default serializer(TokenObtainPairSerializer).
+
   "TOKEN_OBTAIN_SERIALIZER": "RepairShopApp.serializers.MyTokenObtainPairSerializer",
-  "ACCESS_TOKEN_LIFETIME": timedelta(minutes=50),
-  # ...
+  "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
+
 }

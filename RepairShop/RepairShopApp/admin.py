@@ -21,8 +21,3 @@ class ProcessAdmin(admin.ModelAdmin):
     search_fields = ['entry_date']
     empty_value_display = '-empty-'
 
-# name = model
-# device = mod
-# description
-# entry_date =
-# exit_date =

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
+from django.db.models import Max
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,7 +10,6 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 
 class DeviceSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Device
         fields = '__all__'
@@ -26,16 +25,28 @@ class ProcessSerializer(serializers.ModelSerializer):
     lookup_field = 'tracking_code'
     def get_exit_date(self, obj):
         if obj.exit_date == None:
-            return 'در حال انجام'
+            return 'working on it'
         else:
             return obj.exit_date
-    # device = serializers.SerializerMethodField("get_device")
     device = DeviceSerializer()
     exit_date = serializers.SerializerMethodField("get_exit_date")
+
+    def validate(self, data):
+        processes = Process.objects.filter(device=data['device']).aggregate(process_phase=Max("name"))
+        # if device have any phases
+        if processes['process_phase'] is not None:
+            if data['name'] - processes['process_phase'] <= 0:
+                raise serializers.ValidationError("device already has this phase")
+            elif data['name'] - processes['process_phase'] > 1:
+                raise serializers.ValidationError("you cant jump repair phases")
+        # if start phase was not zero
+        elif data['name'] != 0:
+            raise serializers.ValidationError("process must start from zero phase")
+        return data
+
     class Meta:
         model = Process
-        # fields = "__all__"
-        exclude = ['id']
+        fields = "__all__"
 
 
 # input user data into the user token

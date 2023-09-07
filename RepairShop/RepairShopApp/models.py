@@ -8,7 +8,6 @@ class Customer(models.Model):
     address = models.CharField(max_length=150)
 
     def __str__(self):
-        print(type(self.user))
         return str(self.user)
 
 
@@ -26,10 +25,21 @@ class Device(models.Model):
         return "{} from {}".format(self.name, self.customer.user.get_username())
 
 
+# choice field class
+class ThingPriority(models.IntegerChoices):
+    process0 = 0, 'process1'
+    process1 = 1, 'process2'
+    process2 = 2, 'process3'
+    process3 = 3, 'process4'
+    process4 = 4, 'process5'
+
+
 class Process(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.IntegerField(default=0, choices=ThingPriority.choices)
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
     description = models.TextField()
     entry_date = models.DateField(auto_now_add=True)
     exit_date = models.DateField(blank=True, null=True)
 
+    def __str__(self):
+        return "{} of {}".format(self.name, self.device.name)
